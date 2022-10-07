@@ -1,0 +1,25 @@
+{
+  "name": "ts-module-example",
+  "version": "1.0.0",
+  "description": "ts-module-example",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/jest": "^29.1.2",
+    "jest": "^29.1.2",
+    "tsd": "^0.24.1",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poiu694/ts-module-example.git"
+  },
+  "author": "poLee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/poiu694/ts-module-example/issues"
+  },
+  "homepage": "https://github.com/poiu694/ts-module-example#readme"
+}
