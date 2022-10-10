@@ -7,7 +7,24 @@ declare global {
 }
 
 module _ {
-  export function add() {}
+  export function add<T extends string | number>(
+    augend: Readonly<T>,
+    addend: Readonly<T>
+  ): T {
+    if (augend === undefined && addend === undefined) {
+      return <T>'';
+    }
+    if (augend !== undefined && addend === undefined) {
+      return augend;
+    }
+    if (addend !== undefined && augend === undefined) {
+      return addend;
+    }
+    if (typeof augend === 'string' || typeof addend === 'string') {
+      return <T>(String(augend) + String(addend));
+    }
+    return <T>(Number(augend) + Number(addend));
+  }
 
   export function after() {}
 
