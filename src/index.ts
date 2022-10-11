@@ -7,7 +7,7 @@ declare global {
 }
 
 module _ {
-  export function add<T extends string | number>(
+  export function add<T extends string | number | undefined>(
     augend: Readonly<T>,
     addend: Readonly<T>
   ): T {

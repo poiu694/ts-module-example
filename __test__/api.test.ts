@@ -17,4 +17,13 @@ describe('_.add', () => {
     expect(_.add<string | number>('1', 2)).toStrictEqual('12');
     expect(_.add<string | number>(1, '2')).toStrictEqual('12');
   });
+
+  it('두 매개변수 중 한 개만 undefined를 더하면 undefined가 아닌 다른 매개변수 나온다.', () => {
+    expect(_.add(undefined, 2)).toStrictEqual(2);
+    expect(_.add(1, undefined)).toStrictEqual(1);
+  });
+
+  it('두 매개변수 모두 undefined를 더하면 빈 문자열이 나온다.', () => {
+    expect(_.add(undefined, undefined)).toStrictEqual('');
+  });
 });
