@@ -52,7 +52,7 @@ module _ {
     return typeof target === 'function';
   }
 
-  export function shuffle<T extends unknown>(target: T[]): T[] {
+  export function shuffle<T extends unknown>(target: Array<T>): Array<T> {
     const length = target == null ? 0 : target.length;
     if (!length) {
       return [];
