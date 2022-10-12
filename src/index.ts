@@ -26,7 +26,26 @@ module _ {
     return <T>(Number(augend) + Number(addend));
   }
 
-  export function after() {}
+  export function after<
+    T extends unknown[],
+    R extends ReturnType<Function['apply']>
+  >(
+    num: number,
+    func: (...args: T) => ReturnType<Function['apply']>
+  ): (...args: T) => R {
+    if (typeof func !== 'function') {
+      throw new TypeError('Expected a function');
+    }
+    num = num || 0;
+    return function (...args) {
+      if (num < 1) {
+        return undefined;
+      }
+      if (--num < 1) {
+        return func.apply(this, args);
+      }
+    };
+  }
 
   export function at() {}
 

@@ -27,3 +27,32 @@ describe('_.add', () => {
     expect(_.add(undefined, undefined)).toStrictEqual('');
   });
 });
+
+describe('_.after', () => {
+  it('after function이 모듈에 들어있다.', () => {
+    expect(typeof _.after).toBe('function');
+  });
+
+  it('after(1, () => hi) 를 정상적으로 바로 반환한다.', () => {
+    const test = _.after(1, () => 'hi');
+    expect(test()).toBe('hi');
+  });
+
+  it('after(3, () => "hi") 3번째에만 정상적으로 실행된다.', () => {
+    const test = _.after([1, 2, 3].length, () => 'hi');
+    expect(test()).toBe(undefined);
+    expect(test()).toBe(undefined);
+    expect(test()).toStrictEqual('hi');
+    expect(test()).toStrictEqual(undefined);
+  });
+
+  it('after(0, () => hi) 는 횟수가 없어 after를 판단하기 어려우므로 undefined를 리턴한다.', () => {
+    const test = _.after(0, () => 'hi');
+    expect(test()).toBe(undefined);
+  });
+
+  it('after(-1, () => hi) 는 음수이므로 after를 판단하기 어려우므로 undefined를 리턴한다.', () => {
+    const test = _.after(-1, () => 'hi');
+    expect(test()).toBe(undefined);
+  });
+});
