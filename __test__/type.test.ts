@@ -9,4 +9,9 @@ test('_.add 타입을 테스트한다.', () => {
   expectType<string | number>(_.add<string | number>(1, '2'));
 });
 
-test('_.after 타입을 테스트한다.', () => {});
+test('_.after 타입을 테스트한다.', () => {
+  const strTest = _.after(1, () => 'hi');
+  const numberTest = _.after(1, () => 1);
+  expectType<string>(strTest());
+  expectType<undefined>(numberTest());
+});

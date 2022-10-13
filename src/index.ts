@@ -31,8 +31,16 @@ module _ {
     R extends ReturnType<Function['apply']>
   >(
     num: number,
-    func: (...args: T) => ReturnType<Function['apply']>
-  ): (...args: T) => R {
+    func: (
+      ...args: T
+    ) => R extends ReturnType<Function['apply']>
+      ? ReturnType<Function['apply']>
+      : undefined
+  ): (
+    ...args: T
+  ) => R extends ReturnType<Function['apply']>
+    ? ReturnType<Function['apply']>
+    : undefined {
     if (typeof func !== 'function') {
       throw new TypeError('Expected a function');
     }
