@@ -63,6 +63,23 @@ module _ {
     return {};
   }
 
+  export function get<T extends Object, K extends keyof T>(
+    object: T,
+    path: K | K[],
+    defaultValue?: unknown
+  ): unknown | typeof object | typeof object[] {
+    if (typeof path !== 'object') {
+      return object.hasOwnProperty(path) ? object[path] : undefined;
+    }
+
+    let index = 0;
+    const result: T[K][] = <T[K][]>[];
+    while (object != null && index < length) {
+      result.push(object[path[index++]]);
+    }
+    return object == null ? defaultValue : result;
+  }
+
   export function isNull<T extends unknown>(target: T): boolean {
     return target === null;
   }

@@ -56,3 +56,26 @@ describe('_.after', () => {
     expect(test()).toBe(undefined);
   });
 });
+
+describe('_.get', () => {
+  type Object1 = {
+    a: { b: { c: number } }[];
+  };
+  let object = <Object1>{};
+  beforeEach(() => {
+    object = { a: [{ b: { c: 3 } }] };
+  });
+
+  it('get function이 모듈에 들어있다.', () => {
+    expect(typeof _.get).toBe('function');
+  });
+
+  it('get(obj, key)에서 정상적인 key일때 잘 작동한다.', () => {
+    expect(_.get(object, 'a')).toStrictEqual([{ b: { c: 3 } }]);
+  });
+
+  it('get(obj, key)에서 정상적인 key가 아닐때 잘 작동하지 않는다.', () => {
+    // 임시로 keyType인척 하게 만들기
+    expect(_.get(object, 'b' as keyof object)).toStrictEqual(undefined);
+  });
+});
