@@ -14,11 +14,7 @@
  * */
 export function getObjectDeepKeys(obj: Object): string[] {
   return Object.keys(obj)
-    .filter(
-      (key) =>
-        obj.hasOwnProperty(key) &&
-        obj[key as keyof typeof obj] instanceof Object
-    )
+    .filter((key) => obj[key as keyof typeof obj] instanceof Object)
     .map((key) => {
       const subObject = obj[key as keyof Object];
       // 배열인 경우에는 "[인덱스]" 를 prefix에 붙여준다.
