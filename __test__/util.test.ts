@@ -28,7 +28,7 @@ describe('getObjectDeepKey', () => {
   it('complex case#1, Object 내부 Array', () => {
     complex1 = { a: 1, b: 2, c: [1, 2, 3] };
     const key = getObjectDeepKeys(complex1);
-    expect(key).toStrictEqual(['a', 'b', 'c', 'c[0]', 'c[1]', 'c[2]']);
+    expect(key).toStrictEqual(['a', 'b', 'c', 'c.0', 'c.1', 'c.2']);
   });
 
   it('complex case#2, Array 내부 Object', () => {
@@ -47,12 +47,11 @@ describe('getObjectDeepKey', () => {
       '2.a',
       '2.b',
       '2.d',
-      '2.d[0]',
-      '2.d[1]',
-      '2.d[2]',
-      '2.d[2].a',
-      '2.d[2]',
-      '2.d[2].b',
+      '2.d.0',
+      '2.d.1',
+      '2.d.2',
+      '2.d.2.a',
+      '2.d.2.b',
     ]);
   });
 });
