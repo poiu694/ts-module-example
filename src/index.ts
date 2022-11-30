@@ -57,7 +57,15 @@ module _ {
     };
   }
 
-  export function at() {}
+  export function at<T extends Object, K extends string | string[]>(
+    object: T,
+    paths: K
+  ): unknown | unknown[] {
+    if (typeof paths === 'object') {
+      return paths.map((path) => getObjectValueByPath(object, path));
+    }
+    return getObjectValueByPath(object, paths);
+  }
 
   export function attempt() {}
 

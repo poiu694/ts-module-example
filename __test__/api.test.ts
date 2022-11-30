@@ -1,5 +1,4 @@
 import _ from '../src';
-import { getObjectDeepKeys } from '../src/utils';
 
 describe('_.add', () => {
   it('add function이 모듈에 들어있다.', () => {
@@ -113,5 +112,33 @@ describe('_.get', () => {
     expect(_.get(object, 'q', 1)).toStrictEqual(1);
     expect(_.get(object, 'q', null)).toStrictEqual(null);
     expect(_.get(object, 'q', undefined)).toStrictEqual(undefined);
+  });
+});
+
+describe('_.at', () => {
+  let object = {};
+  beforeEach(() => {
+    object = {
+      b: 3,
+      c: 1,
+      d: 2,
+    };
+  });
+
+  it('at function이 모듈에 들어있다.', () => {
+    expect(typeof _.at).toBe('function');
+  });
+
+  it('at(obj, key)에서 key가 1개일 때 잘 작동한다.', () => {
+    const b = _.at(object, 'b');
+    expect(b).toStrictEqual(3);
+  });
+
+  it('at(obj, key)에서 key가 배열일 때 잘 작동한다.', () => {
+    expect(_.at(object, ['b', 'c', 'd'])).toStrictEqual([3, 1, 2]);
+  });
+
+  it('at(obj, key)에서 정상적인 key가 아닐때 null를 리턴한다.', () => {
+    expect(_.at(object, 'q')).toStrictEqual(null);
   });
 });
