@@ -1,3 +1,5 @@
+import { getObjectDeepKeys, getObjectValueByPath } from './utils';
+
 function _(selector: string): Node | null {
   return document.querySelector(selector);
 }
@@ -63,20 +65,20 @@ module _ {
     return {};
   }
 
-  export function get<T extends Object, K extends keyof T>(
+  export function get<T extends Object, K extends string>(
     object: T,
     path: K | K[],
     defaultValue?: unknown
-  ): unknown | typeof object | typeof object[] {
+  ) {
+    if (object == null) {
+      return defaultValue;
+    }
     if (typeof path !== 'object') {
-      return object.hasOwnProperty(path) ? object[path] : undefined;
+      return getObjectValueByPath(object, path) ?? defaultValue;
     }
-
-    let index = 0;
-    const result: T[K][] = <T[K][]>[];
-    while (object != null && index < length) {
-      result.push(object[path[index++]]);
-    }
+    const result = path.map((key) =>
+      getObjectValueByPath(object, key as string)
+    );
     return object == null ? defaultValue : result;
   }
 

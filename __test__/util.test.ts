@@ -1,15 +1,14 @@
 import { getObjectDeepKeys } from '../src/utils';
 
-type Simple1 = { a: number; b: number };
-type Simple2 = number[];
-type Complex1 = { a: number; b: number; c: number[] };
-type Complex2 = (number | { a: number; b: number })[];
-type Complex3 = (
-  | number
-  | { a: number; b: number; d: (number | { a: number; b: number })[] }
-)[];
-
 describe('getObjectDeepKey', () => {
+  type Simple1 = { a: number; b: number };
+  type Simple2 = number[];
+  type Complex1 = { a: number; b: number; c: number[] };
+  type Complex2 = (number | { a: number; b: number })[];
+  type Complex3 = (
+    | number
+    | { a: number; b: number; d: (number | { a: number; b: number })[] }
+  )[];
   let simple1: Simple1, simple2: Simple2;
   let complex1: Complex1, complex2: Complex2, complex3: Complex3;
 

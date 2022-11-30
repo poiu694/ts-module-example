@@ -1,4 +1,5 @@
 import _ from '../src';
+import { getObjectDeepKeys } from '../src/utils';
 
 describe('_.add', () => {
   it('add function이 모듈에 들어있다.', () => {
@@ -59,11 +60,20 @@ describe('_.after', () => {
 
 describe('_.get', () => {
   type Object1 = {
-    a: { b: { c: number } }[];
+    b: number;
+    c: ({ d: number } | number)[];
+    d: {
+      f: number;
+      k: (number | { g: number })[];
+    };
   };
   let object = <Object1>{};
   beforeEach(() => {
-    object = { a: [{ b: { c: 3 } }] };
+    object = {
+      b: 3,
+      c: [{ d: 2 }, 2],
+      d: { f: 1, k: [3, 4, 5, { g: 1 }, { g: 2 }] },
+    };
   });
 
   it('get function이 모듈에 들어있다.', () => {
@@ -71,11 +81,37 @@ describe('_.get', () => {
   });
 
   it('get(obj, key)에서 정상적인 key일때 잘 작동한다.', () => {
-    expect(_.get(object, 'a')).toStrictEqual([{ b: { c: 3 } }]);
+    const b = _.get(object, 'b');
+    expect(b).toStrictEqual(3);
   });
 
-  it('get(obj, key)에서 정상적인 key가 아닐때 잘 작동하지 않는다.', () => {
-    // 임시로 keyType인척 하게 만들기
-    expect(_.get(object, 'b' as keyof object)).toStrictEqual(undefined);
+  it('get(obj, key)에서 정상적인 모든 key가 잘 작동한다.', () => {
+    // const keys = getObjectDeepKeys(object); //  전체 키  확인
+    // const result = _.get(object, keys); // 전체 value 확인
+
+    expect(_.get(object, 'b')).toStrictEqual(3);
+    expect(_.get(object, 'c')).toStrictEqual([{ d: 2 }, 2]);
+    expect(_.get(object, 'd')).toStrictEqual({
+      f: 1,
+      k: [3, 4, 5, { g: 1 }, { g: 2 }],
+    });
+    expect(_.get(object, 'c.0')).toStrictEqual({ d: 2 });
+    expect(_.get(object, 'c.0.d')).toStrictEqual(2);
+    expect(_.get(object, 'c.1')).toStrictEqual(2);
+    expect(_.get(object, 'd.f')).toStrictEqual(1);
+    expect(_.get(object, 'd.k')).toStrictEqual([3, 4, 5, { g: 1 }, { g: 2 }]);
+    expect(_.get(object, 'd.k.0')).toStrictEqual(3);
+    expect(_.get(object, 'd.k.1')).toStrictEqual(4);
+    expect(_.get(object, 'd.k.2')).toStrictEqual(5);
+    expect(_.get(object, 'd.k.3')).toStrictEqual({ g: 1 });
+    expect(_.get(object, 'd.k.4')).toStrictEqual({ g: 2 });
+    expect(_.get(object, 'd.k.3.g')).toStrictEqual(1);
+    expect(_.get(object, 'd.k.4.g')).toStrictEqual(2);
+  });
+
+  it('get(obj, key)에서 정상적인 key가 아닐때 defaultValue를 리턴한다.', () => {
+    expect(_.get(object, 'q', 1)).toStrictEqual(1);
+    expect(_.get(object, 'q', null)).toStrictEqual(null);
+    expect(_.get(object, 'q', undefined)).toStrictEqual(undefined);
   });
 });

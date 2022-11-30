@@ -14,7 +14,7 @@
  * */
 export function getObjectDeepKeys(obj: Object): string[] {
   return Object.keys(obj)
-    .filter((key) => obj[key as keyof typeof obj] instanceof Object)
+    .filter((key) => obj[key as keyof typeof obj] != undefined)
     .map((key) => {
       const subObject = obj[key as keyof Object];
       return getObjectDeepKeys(subObject).map((subKey) => `${key}.${subKey}`);

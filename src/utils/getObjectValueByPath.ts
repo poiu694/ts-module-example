@@ -4,8 +4,12 @@ export function getObjectValueByPath(obj: Object, path: string) {
   const length = paths.length;
 
   for (idx = 0; idx < length; idx++) {
-    const key = path[idx];
-    obj = obj[key as keyof Object];
+    const key = paths[idx] as keyof typeof obj;
+    if (key != null && obj[key] != undefined) {
+      obj = obj[key];
+    } else {
+      return null;
+    }
   }
   return obj;
 }
